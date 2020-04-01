@@ -57,7 +57,7 @@ function getInputs() {
 }
 
 function run_model() {
-  console.log('running_')
+   console.log('running_')
    const myOnnxSession = new onnx.InferenceSession();
       // load the ONNX model file
       //
@@ -75,9 +75,35 @@ function run_model() {
   });
 }
 
+function htmlTagsSentenceReader(){
+  var list_of_sentences=[];
+  var optional_options = {};
+
+  var texttags = ["h1","h2","h3","h4","h5","h6","li","p","span"];
+
+  for (var i = texttags.length - 1; i >= 0; i--) {
+    var nodes = document.getElementsByTagName(texttags[i])
+    for (var j = nodes.length - 1; j >= 0; j--) {
+      if(nodes[j].children.length === 0) {
+        var text =nodes[j].textContent;
+        var sentences = cldrSegmentation.sentenceSplit(text);
+        list_of_sentences = [...list_of_sentences, ...sentences]
+      }
+    }
+  };
+
+  console.log(list_of_sentences);
+  return list_of_sentences;
+}
+
+
 function init(){
-  run_model()
-  processNode(node);
+
+ var sentences = htmlTagsSentenceReader()
+ //takes sentences as input 
+ run_model()
+ processNode(node);
+
 }
 
 chrome.runtime.onMessage.addListener(function (messageBody, sender, sendResponse) {

@@ -17,7 +17,7 @@
       "matches": [
                 "*://*/*"
             ],
-      "js": ["onnx.js","main.js"],
+      "js": ["onnx.js","cldr-segmentation.js","main.js"],
       "run_at": "document_end"
     }
   ],
